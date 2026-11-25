@@ -1,0 +1,46 @@
+nacos:
+  sentinel:
+    namespace: 05a2a104-6602-473a-b341-b4305949bcfd
+spring:
+  cloud:
+    sentinel:
+      datasource:
+        flow:
+          nacos:
+            server-addr: ${nacos.server-addr}
+            namespace: ${nacos.sentinel.namespace}
+            dataId: ${spring.application.name}-flow-rules
+            groupId: DEFAULT_SENTINEL_GROUP
+            rule-type: flow
+        degrade:
+          nacos:
+            server-addr: ${nacos.server-addr}
+            namespace: ${nacos.sentinel.namespace}
+            dataId: ${spring.application.name}-degrade-rules
+            groupId: DEFAULT_SENTINEL_GROUP
+            rule-type: degrade
+        param-flow:
+          nacos:
+            server-addr: ${nacos.server-addr}
+            namespace: ${nacos.sentinel.namespace}
+            dataId: ${spring.application.name}-param-rules
+            groupId: DEFAULT_SENTINEL_GROUP
+            rule-type: param-flow
+        system:
+          nacos:
+            server-addr: ${nacos.server-addr}
+            namespace: ${nacos.sentinel.namespace}
+            dataId: ${spring.application.name}-system-rules
+            groupId: DEFAULT_SENTINEL_GROUP
+            rule-type: system
+      eager: true
+      log:
+        dir: /data/logs/${spring.application.name}
+
+feign:
+  sentinel:
+    enabled: true
+
+logging:
+  level:
+    com.alibaba.cloud.sentinel.datasource.converter.SentinelConverter: error
